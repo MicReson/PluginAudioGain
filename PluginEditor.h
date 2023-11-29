@@ -18,5 +18,9 @@ private:
     // access the processor object that created it.
     AudioPluginAudioProcessor& processorRef;
 
+    //Declare the gain slider
+    juce::Slider MyGainSlider;
+    juce::Range<double> MySliderRange;
+    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioPluginAudioProcessorEditor)
 };

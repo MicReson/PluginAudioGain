@@ -8,7 +8,16 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAud
     juce::ignoreUnused (processorRef);
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (400, 300);
+    setSize (600, 600);
+
+    MyGainSlider.setSliderStyle(juce::Slider::LinearBarVertical);
+    MyGainSlider.setRange(0.0, 1.0);
+    MyGainSlider.setTextBoxStyle(juce::Slider::NoTextBox, false, 90, 0);
+    MyGainSlider.setPopupDisplayEnabled(true, true, this);
+    MyGainSlider.setTextValueSuffix("Volume");
+    MyGainSlider.setValue(0.5);
+
+    addAndMakeVisible(MyGainSlider);
 }
 
 AudioPluginAudioProcessorEditor::~AudioPluginAudioProcessorEditor()
@@ -23,11 +32,12 @@ void AudioPluginAudioProcessorEditor::paint (juce::Graphics& g)
 
     g.setColour (juce::Colours::white);
     g.setFont (15.0f);
-    g.drawFittedText ("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
+    g.drawFittedText ("Gain", getLocalBounds(), juce::Justification::centred, 1);
 }
 
 void AudioPluginAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
+    MyGainSlider.setBounds(40, 30, 20, getHeight() - 60);
 }
