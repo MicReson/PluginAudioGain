@@ -12,6 +12,7 @@ AudioPluginAudioProcessor::AudioPluginAudioProcessor()
 #endif
       )
 {
+    GnVl = juce::SmoothedValue<float>(0.0f);
 }
 
 AudioPluginAudioProcessor::~AudioPluginAudioProcessor()
@@ -123,11 +124,13 @@ bool AudioPluginAudioProcessor::isBusesLayoutSupported(const BusesLayout &layout
 void AudioPluginAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
                                              juce::MidiBuffer &midiMessages)
 {
+    buffer.clear();
+
     juce::ignoreUnused(midiMessages);
 
     juce::ScopedNoDenormals noDenormals;
-    auto totalNumInputChannels = getTotalNumInputChannels();
-    auto totalNumOutputChannels = getTotalNumOutputChannels();
+    int totalNumInputChannels = getTotalNumInputChannels();
+    int totalNumOutputChannels = getTotalNumOutputChannels();
 
     // In case we have more outputs than inputs, this code clears any output
     // channels that didn't contain input data, (because these aren't
@@ -135,7 +138,7 @@ void AudioPluginAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
     // This is here to avoid people getting screaming feedback
     // when they first compile a plugin, but obviously you don't need to keep
     // this code if your algorithm always overwrites all the output channels.
-    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
+    for (int i = totalNumInputChannels; i < totalNumOutputChannels; i++)
         buffer.clear(i, 0, buffer.getNumSamples());
 
     // This is the place where you'd normally do the guts of your plugin's
@@ -144,11 +147,15 @@ void AudioPluginAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
     // the samples and the outer loop is handling the channels.
     // Alternatively, you can process the samples with the channels
     // interleaved by keeping the same state.
-    for (int channel = 0; channel < totalNumInputChannels; ++channel)
+    for (int channel = 0; channel < totalNumInputChannels; channel++)
     {
-        auto *channelData = buffer.getWritePointer(channel);
+        float *channelData = buffer.getWritePointer(channel);
         juce::ignoreUnused(channelData);
-        // ..do something to the data...
+
+        for(int sample = 0; sample < buffer.getNumSamples(); sample++)
+        {
+            channelData[sample] *= GnVl.getNextValue();
+        }
     }
 }
 

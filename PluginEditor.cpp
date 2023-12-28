@@ -3,21 +3,24 @@
 
 //==============================================================================
 AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAudioProcessor& p)
-    : AudioProcessorEditor (&p), processorRef (p)
+    : AudioProcessorEditor (&p), processorRef (p),
+    mnRg(0.0),
+    mxRg(1.0)
 {
     juce::ignoreUnused (processorRef);
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
     setSize (600, 600);
+    SlRg = juce::Range<double>(mnRg, mxRg);
+    GnSldr.setSliderStyle(juce::Slider::LinearBarVertical);
+    GnSldr.setRange(SlRg, 0.01);
+    GnSldr.setTextBoxStyle(juce::Slider::NoTextBox, false, 90, 0);
+    GnSldr.setPopupDisplayEnabled(true, true, this);
+    GnSldr.setTextValueSuffix("Volume");
+    GnSldr.setValue(0.5);
 
-    MyGainSlider.setSliderStyle(juce::Slider::LinearBarVertical);
-    MyGainSlider.setRange(0.0, 1.0);
-    MyGainSlider.setTextBoxStyle(juce::Slider::NoTextBox, false, 90, 0);
-    MyGainSlider.setPopupDisplayEnabled(true, true, this);
-    MyGainSlider.setTextValueSuffix("Volume");
-    MyGainSlider.setValue(0.5);
-
-    addAndMakeVisible(MyGainSlider);
+    addAndMakeVisible(GnSldr);
+    GnSldr.addListener(this);
 }
 
 AudioPluginAudioProcessorEditor::~AudioPluginAudioProcessorEditor()
@@ -39,5 +42,9 @@ void AudioPluginAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
-    MyGainSlider.setBounds(40, 30, 20, getHeight() - 60);
+    GnSldr.setBounds(40, 30, 20, getHeight() - 60);
+}
+
+void AudioPluginAudioProcessorEditor::sliderValueChanged(juce::Slider* slider){
+    processorRef.GnVl = (float)GnSldr.getValue();
 }

@@ -41,6 +41,9 @@ public:
     //==============================================================================
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
+    // float gnVl; //Value to be set by the gain slider
+
+    juce::SmoothedValue<float> GnVl; //Smooth Value
 
 private:
     //==============================================================================
