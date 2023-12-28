@@ -4,8 +4,8 @@
 //==============================================================================
 AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAudioProcessor& p)
     : AudioProcessorEditor (&p), processorRef (p),
-    mnRg(0.0),
-    mxRg(1.0)
+    mnRg(-62.0),
+    mxRg(25.0)
 {
     juce::ignoreUnused (processorRef);
     // Make sure that before the constructor has finished, you've set the
@@ -17,7 +17,7 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAud
     GnSldr.setTextBoxStyle(juce::Slider::NoTextBox, false, 90, 0);
     GnSldr.setPopupDisplayEnabled(true, true, this);
     GnSldr.setTextValueSuffix("Volume");
-    GnSldr.setValue(0.5);
+    GnSldr.setValue(0.0);
 
     addAndMakeVisible(GnSldr);
     GnSldr.addListener(this);

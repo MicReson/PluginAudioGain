@@ -124,7 +124,7 @@ bool AudioPluginAudioProcessor::isBusesLayoutSupported(const BusesLayout &layout
 void AudioPluginAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
                                              juce::MidiBuffer &midiMessages)
 {
-    buffer.clear();
+    // buffer.clear();
 
     juce::ignoreUnused(midiMessages);
 
@@ -150,12 +150,13 @@ void AudioPluginAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
     for (int channel = 0; channel < totalNumInputChannels; channel++)
     {
         float *channelData = buffer.getWritePointer(channel);
-        juce::ignoreUnused(channelData);
 
         for(int sample = 0; sample < buffer.getNumSamples(); sample++)
         {
-            channelData[sample] *= GnVl.getNextValue();
+            channelData[sample] *= juce::Decibels::decibelsToGain(GnVl.getNextValue());
         }
+
+        juce::ignoreUnused(channelData);
     }
 }
 
