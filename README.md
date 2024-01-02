@@ -2,6 +2,6 @@
 
 ## Just for testing stuff and learning with the JUCE framework
 
-###TODO:
+##TODO:
 - Add better UI for the slider.
 - Improve look of the plugin.
