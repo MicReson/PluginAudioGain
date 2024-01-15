@@ -45,7 +45,7 @@ juce_add_plugin(AudioPluginGain
     VERSION 0.01                               # Set this if the plugin version is different to the project version
     # ICON_BIG ...                              # ICON_* arguments specify a path to an image file to use as an icon for the Standalone
     # ICON_SMALL ...
-    COMPANY_NAME ElYaSimon                          # Specify the name of the plugin's author
+    COMPANY_NAME El_Ya_Simon                          # Specify the name of the plugin's author
     IS_SYNTH FALSE                       # Is this a synth or an effect?
     NEEDS_MIDI_INPUT FALSE               # Does the plugin need midi input?
     NEEDS_MIDI_OUTPUT FALSE              # Does the plugin need midi output?
@@ -53,10 +53,10 @@ juce_add_plugin(AudioPluginGain
     EDITOR_WANTS_KEYBOARD_FOCUS FALSE    # Does the editor need keyboard focus?
     COPY_PLUGIN_AFTER_BUILD FALSE        # Should the plugin be installed to a default location after building?
     PLUGIN_MANUFACTURER_CODE Pabl               # A four-character manufacturer id with at least one upper-case character
-    PLUGIN_CODE TeSt                            # A unique four-character plugin id with exactly one upper-case character
+    PLUGIN_CODE GnYs                            # A unique four-character plugin id with exactly one upper-case character
                                                 # GarageBand 10.3 requires the first letter to be upper-case, and the remaining letters to be lower-case
     FORMATS VST3 AU                  # The formats to build. Other valid formats are: AAX Unity VST AU AUv3
-    PRODUCT_NAME "El Gain")        # The name of the final executable, which can differ from the target name
+    PRODUCT_NAME "Ya Simon Gain")        # The name of the final executable, which can differ from the target name
 
 # `juce_generate_juce_header` will create a JuceHeader.h for a given target, which will be generated
 # into your build tree. This should be included with `#include <JuceHeader.h>`. The include path for
@@ -114,6 +114,7 @@ target_link_libraries(AudioPluginGain
         juce::juce_recommended_lto_flags
         juce::juce_recommended_warning_flags)
 
+# This is use because the macOS build required this to be set to be able to build due to xcode version and OS version
 target_link_options(AudioPluginGain
     PRIVATE
         -Wl

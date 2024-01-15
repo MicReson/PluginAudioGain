@@ -1,7 +1,13 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
-//==============================================================================
+/**
+ * TODO: Get a better font for the text in the UI of the plugin and better size
+ * TODO: Possible slider UI improvement, see all options gave by JUCE
+ * TODO: Improve color of the plugin
+ * TODO: Double check the feel of the plugin, probably might need some log interpolation
+*/
+
 AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAudioProcessor& p)
     : AudioProcessorEditor (&p), processorRef (p),
     mnRg(-62.0),
@@ -16,7 +22,7 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAud
     GnSldr.setRange(SlRg, 0.01);
     GnSldr.setTextBoxStyle(juce::Slider::NoTextBox, false, 90, 0);
     GnSldr.setPopupDisplayEnabled(true, true, this);
-    GnSldr.setTextValueSuffix("Volume");
+    GnSldr.setTextValueSuffix("Gain");
     GnSldr.setValue(0.0);
 
     addAndMakeVisible(GnSldr);
@@ -42,6 +48,8 @@ void AudioPluginAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
+
+    // TODO: Set a better solution for the resizing of the slider
     GnSldr.setBounds(40, 30, 20, getHeight() - 60);
 }
 
