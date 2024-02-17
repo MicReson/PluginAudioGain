@@ -17,7 +17,7 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAud
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
     setSize (600, 600);
-    SlRg = juce::Range<double>(mnRg, mxRg);
+    SlRg = juce::Range<double>(mnRg, mxRg); // set the range of the slider
     GnSldr.setSliderStyle(juce::Slider::LinearBarVertical);
     GnSldr.setRange(SlRg, 0.01);
     GnSldr.setTextBoxStyle(juce::Slider::NoTextBox, false, 90, 0);
