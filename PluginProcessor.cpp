@@ -3,10 +3,7 @@
 
 //==============================================================================
 AudioPluginAudioProcessor::AudioPluginAudioProcessor()
-    : AudioProcessor(BusesProperties()
-                         .withInput("Input", juce::AudioChannelSet::stereo(), true)
-                         .withOutput("Output", juce::AudioChannelSet::stereo(), true)
-      )
+    : AudioProcessor(BusesProperties().withInput("Input", juce::AudioChannelSet::stereo(), true).withOutput("Output", juce::AudioChannelSet::stereo(), true))
 {
     GnVl = juce::SmoothedValue<float>(0.0f);
 }
@@ -84,15 +81,16 @@ void AudioPluginAudioProcessor::releaseResources()
 
 bool AudioPluginAudioProcessor::isBusesLayoutSupported(const BusesLayout &layouts) const
 {
-    if (layouts.getMainOutputChannelSet() != juce::AudioChannelSet::mono() && layouts.getMainOutputChannelSet() != juce::AudioChannelSet::stereo()) return false;
+    if (layouts.getMainOutputChannelSet() != juce::AudioChannelSet::mono() && layouts.getMainOutputChannelSet() != juce::AudioChannelSet::stereo())
+        return false;
 
-    if (layouts.getMainOutputChannelSet() != layouts.getMainInputChannelSet()) return false;
-    
+    if (layouts.getMainOutputChannelSet() != layouts.getMainInputChannelSet())
+        return false;
+
     return true;
 }
 
-void AudioPluginAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
-                                             juce::MidiBuffer &midiMessages)
+void AudioPluginAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer, juce::MidiBuffer &midiMessages)
 {
     // buffer.clear();
 
@@ -121,7 +119,7 @@ void AudioPluginAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
     {
         float *channelData = buffer.getWritePointer(channel);
 
-        for(int sample = 0; sample < buffer.getNumSamples(); sample++)
+        for (int sample = 0; sample < buffer.getNumSamples(); sample++)
         {
             channelData[sample] *= juce::Decibels::decibelsToGain(GnVl.getNextValue());
         }
